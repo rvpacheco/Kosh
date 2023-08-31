@@ -11,8 +11,8 @@ Welcome to the Kosh Jewelry Website Web Incomer project! This React-based tool e
 
 ## Prerequisites
 
-- Node.js (version X.X.X)
-- npm (version X.X.X)
+- Node.js 
+- npm 
 - Modern web browser
 
 ## Acknowledgments
