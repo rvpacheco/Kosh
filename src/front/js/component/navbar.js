@@ -1,8 +1,15 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
-import { Container, Navbar as BootstrapNavbar, Nav } from "react-bootstrap";
+import { Container, Navbar as BootstrapNavbar, Nav, Dropdown } from "react-bootstrap";
+import { Context } from "../store/appContext";
 
 export const Navbar = () => {
+  const { store, actions } = useContext(Context);
+
+  const handleDeleteFavorite = (elementId) => {
+    actions.markFavorite(elementId);
+  };
+
   return (
     <Fragment>
       {/* Top Panel */}
@@ -27,22 +34,29 @@ export const Navbar = () => {
               <Nav.Link href="#">Contact</Nav.Link>
             </Nav>
           </Nav>
+
+          {/* Favorites Dropdown */}
+          <Dropdown className="ms-auto">
+            <Dropdown.Toggle variant="secondary" id="favorites-dropdown">
+              Favorites
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {store.favorites.map((favorite, index) => (
+                <Dropdown.Item key={index}>
+                  <Link to={`/details/${favorite.id}`} className="dropdown-item">
+                    {favorite.name}
+                  </Link>
+                  <button className="btn btn-link" onClick={() => handleDeleteFavorite(favorite.id)}>
+                    <i className="bi bi-trash"></i>
+                  </button>
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
         </Container>
       </BootstrapNavbar>
 
       {/* Page Title and Breadcrumbs */}
-      <div className="top_panel_title">
-        <div className="top_panel_title_inner">
-          <Container>
-            {/* Replace the following code with the page title */}
-			
-            <h1 className="page_title">Kosh</h1>
-
-            {/* Replace the following code with your breadcrumbs */}
-            <div className="breadcrumbs">Breadcrumbs</div>
-          </Container>
-        </div>
-      </div>      
     </Fragment>
   );
 };

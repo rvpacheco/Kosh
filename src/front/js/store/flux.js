@@ -13,7 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					background: "white",
 					initial: "white"
 				}
-			]
+			],
+			favorites :[]
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -46,6 +47,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
+			},
+			markFavorite:(elemenId,name)=>{
+				let {favorites} = getStore()
+				//verificando si el favorito exista
+				if(!favorites.some(person=>person.id==elemenId)){
+					// en caso de que no exista, se agg...
+					setStore({favorites:[...favorites,{id:elemenId, name}]})
+				}else{
+					//en caso que si se elimina
+					let index=favorites.findIndex(person=>person.id==elemenId)
+					let newFavorites=[...favorites]
+					newFavorites.splice(index,1)
+					setStore({favorites:newFavorites})
+				}
 			}
 		}
 	};
