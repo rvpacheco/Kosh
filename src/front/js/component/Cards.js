@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
 export const Cards = ({ data, currentIndex, type }) => {
   const { store, actions } = useContext(Context);
@@ -8,6 +10,11 @@ export const Cards = ({ data, currentIndex, type }) => {
   function checkFavorites(index, uid) {
     return store.favorites.some(person => person.id === `${type}/${index}/${uid}`);
   }
+
+  const handleBuyNow = (item) => {
+    // Llama a la acción para agregar al carrito en lugar de usar un estado local
+    actions.addToCart(item.uid, item.name);
+  };
 
   return (
     <div className="d-flex flex-wrap justify-content-center align-items-center">
@@ -24,10 +31,16 @@ export const Cards = ({ data, currentIndex, type }) => {
                 <p className="card-text">{item.description}</p>
                 <button
                   href="#"
-                  className="btn btn-outline-warning"
+                  className="btn btn-outline-warning me-2"
                   onClick={() => actions.markFavorite(`${type}/${index}/${item.uid}`, item.name)}
                 >
-                  <i className={`bi bi-heart${checkFavorites(index, item.uid) ? "-fill" : ""}`}></i>
+                  <FontAwesomeIcon icon={faHeart} className={checkFavorites(index, item.uid) ? "text-danger" : ""} />
+                </button>
+                <button
+                  className="btn btn-outline-primary"
+                  onClick={() => handleBuyNow(item)}
+                >
+                  <FontAwesomeIcon icon={faShoppingCart} /> Comprar Ahora
                 </button>
               </div>
             </div>

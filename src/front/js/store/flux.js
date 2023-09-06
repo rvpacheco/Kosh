@@ -14,7 +14,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					initial: "white"
 				}
 			],
-			favorites :[]
+			favorites :[],
+			cart: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -61,7 +62,37 @@ const getState = ({ getStore, getActions, setStore }) => {
 					newFavorites.splice(index,1)
 					setStore({favorites:newFavorites})
 				}
+			},
+			addToCart: (itemId, itemName) => {
+				const store = getStore();
+				// Verifica si el artículo ya está en el carrito
+				const itemExistsInCart = store.cart.some(item => item.id === itemId);
+			  
+				if (!itemExistsInCart) {
+				  // Si no existe en el carrito, agrégalo
+				  const newItem = { id: itemId, name: itemName, quantity: 1 };
+				  setStore({ cart: [...store.cart, newItem] });
+				} else {
+				  // Si ya existe en el carrito, actualiza la cantidad
+				  const updatedCart = store.cart.map(item => {
+					if (item.id === itemId) {
+					  item.quantity += 1;
+					}
+					return item;
+				  });
+				  setStore({ cart: updatedCart });
+				}
+			  },
+			removeFromCart: itemId => {
+			const store = getStore();
+			const updatedCart = store.cart.filter(item => item.id !== itemId);
+			setStore({ cart: updatedCart });
+			},
+	
+			clearCart: () => {
+			setStore({ cart: [] });
 			}
+			  
 		}
 	};
 };

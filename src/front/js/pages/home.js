@@ -33,14 +33,24 @@ export const Home = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="hero">
+      
         <div className="hero-content">
           <h1 className="page_title">Kosh</h1>
           <p>Your one-stop shop for everything you need.</p>
           {/* Add any call-to-action buttons or elements */}
         </div>
-        <img src={rigoImageUrl} alt="Hero Image" />
-      </section>
+        <img
+        src="https://pandoraco.vtexassets.com/assets/vtex.file-manager-graphql/images/7050df3a-dc05-49ad-9d44-72c7c73a69fe___1727dab5a5fda0e920efb9dd57ad481c.gif"
+        alt="Banner pandora"
+        style={{
+          maxHeight: "500px",
+          width: "100%",
+        }}
+        className="vtex-slider-layout-0-x-imageElement vtex-slider-layout-0-x-imageElement--carousel vtex-slider-layout-0-x-imageElement--fitImage vtex-store-components-3-x-imageElement vtex-store-components-3-x-imageElement--carousel vtex-store-components-3-x-imageElement--fitImage"
+        loading="eager"
+        crossorigin="anonymous"
+      />
+      
 
       {/* Featured Products Section */}
       <section className="featured-products">
